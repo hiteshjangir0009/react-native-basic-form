@@ -1,10 +1,11 @@
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
-export const Form = ({ data, gap_bwt_keyValue = 10, gap_bwt_keys = 12, lable_style, inputtext_style, button_container_style, buttontext_style, placeholderTextColor = "#999", scrollEnabled = true, showsHorizontalScrollIndicator = true, }) => {
+import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
+export const Form = ({ data, gap_bwt_keyValue = 10, gap_bwt_keys = 12, lable_style, inputtext_style, button_container_style, buttontext_style, placeholderTextColor = "#999", headerIcon, headerIcon_style, imageProps, flatlist }) => {
     return (<View>
-      <FlatList scrollEnabled={scrollEnabled} showsHorizontalScrollIndicator={showsHorizontalScrollIndicator} data={data} keyExtractor={(item) => item.id} ItemSeparatorComponent={() => <View style={{ height: gap_bwt_keys }}/>} renderItem={({ item }) => (<View style={{ gap: gap_bwt_keyValue }}>
+      {headerIcon && (<Image source={headerIcon} style={[styles.headericon, headerIcon_style]} {...imageProps}/>)}
+      <FlatList {...flatlist} data={data} keyExtractor={(item) => item.id} ItemSeparatorComponent={() => <View style={{ height: gap_bwt_keys }}/>} renderItem={({ item }) => (<View style={{ gap: gap_bwt_keyValue }}>
             {item.label && (<Text style={[styles.lable, lable_style]}>{item.label}</Text>)}
 
-            {item.input && (<TextInput style={[styles.inputtext, inputtext_style]} placeholder={item.input.placeholder} placeholderTextColor={placeholderTextColor} multiline={item.input.multiline} textAlignVertical={item.input.TextAlignVertical} value={item.input.value} onChangeText={item.input.onChangeText} keyboardType={item.input.keybordType}/>)}
+            {item.input && (<TextInput style={[styles.inputtext, inputtext_style]} placeholder={item.input.placeholder} placeholderTextColor={placeholderTextColor} multiline={item.input.multiline} textAlignVertical={item.input.textAlignVertical} value={item.input.value} onChangeText={item.input.onChangeText} keyboardType={item.input.keyboardType}/>)}
 
             {item.button && (<TouchableOpacity onPress={item.button.onPress} style={[styles.button_container, button_container_style]}>
                 <Text style={[styles.button_text, buttontext_style]}>
@@ -31,5 +32,10 @@ const styles = StyleSheet.create({
     button_text: {
         color: "#000",
         fontSize: 14,
+    },
+    headericon: {
+        height: 30,
+        width: 30,
+        resizeMode: 'contain'
     },
 });

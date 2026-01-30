@@ -1,11 +1,11 @@
-import type { TextStyle, ViewStyle } from "react-native";
+import type { FlatListProps, ImageProps, ImageSourcePropType, ImageStyle, TextInputProps, TextStyle, ViewStyle } from "react-native";
 export type FormInput = {
     placeholder?: string;
     value: string;
-    onChangeText: (text: string) => void;
-    multiline: boolean;
-    TextAlignVertical?: "top" | "center" | "bottom" | "auto" | undefined;
-    keybordType?: "default" | "number-pad" | "decimal-pad" | "numeric" | "email-address" | "phone-pad" | "url" | "ascii-capable" | "numbers-and-punctuation" | "name-phone-pad" | "twitter" | "web-search" | "visible-password";
+    onChangeText: TextInputProps["onChangeText"];
+    multiline?: TextInputProps["multiline"];
+    textAlignVertical?: TextInputProps["textAlignVertical"];
+    keyboardType?: TextInputProps["keyboardType"];
 };
 export type FormButton = {
     label: string;
@@ -26,6 +26,9 @@ export type FormProps = {
     button_container_style?: ViewStyle;
     buttontext_style?: TextStyle;
     placeholderTextColor?: string;
-    scrollEnabled?: boolean;
-    showsHorizontalScrollIndicator?: boolean;
+    headerIcon?: ImageSourcePropType | undefined;
+    headerIcon_style?: ImageStyle;
+    imageProps?: ImageProps;
+    numColumns?: number;
+    flatlist?: FlatListProps<FormItem>;
 };

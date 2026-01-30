@@ -1,5 +1,6 @@
 import {
   FlatList,
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -17,14 +18,22 @@ export const Form: React.FC<FormProps> = ({
   button_container_style,
   buttontext_style,
   placeholderTextColor = "#999",
-  scrollEnabled = true,
-  showsHorizontalScrollIndicator = true,
+  headerIcon,
+  headerIcon_style,
+  imageProps,
+  flatlist
 }) => {
   return (
     <View>
+      {headerIcon && (
+        <Image
+          source={headerIcon}
+          style={[styles.headericon, headerIcon_style]}
+          {...imageProps}
+        />
+      )}
       <FlatList<FormItem>
-        scrollEnabled={scrollEnabled}
-        showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+        {...flatlist}
         data={data}
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={{ height: gap_bwt_keys }} />}
@@ -40,10 +49,10 @@ export const Form: React.FC<FormProps> = ({
                 placeholder={item.input.placeholder}
                 placeholderTextColor={placeholderTextColor}
                 multiline={item.input.multiline}
-                textAlignVertical={item.input.TextAlignVertical}
+                textAlignVertical={item.input.textAlignVertical}
                 value={item.input.value}
                 onChangeText={item.input.onChangeText}
-                keyboardType={item.input.keybordType}
+                keyboardType={item.input.keyboardType}
               />
             )}
 
@@ -81,5 +90,10 @@ const styles = StyleSheet.create({
   button_text: {
     color: "#000",
     fontSize: 14,
+  },
+  headericon: {
+    height: 30,
+    width: 30,
+    resizeMode:'contain'
   },
 });
