@@ -1,34 +1,55 @@
-import type { FlatListProps, ImageProps, ImageSourcePropType, ImageStyle, TextInputProps, TextStyle, ViewStyle } from "react-native";
-export type FormInput = {
-    placeholder?: string;
-    value: string;
-    onChangeText: TextInputProps["onChangeText"];
-    multiline?: TextInputProps["multiline"];
-    textAlignVertical?: TextInputProps["textAlignVertical"];
-    keyboardType?: TextInputProps["keyboardType"];
-};
-export type FormButton = {
-    label: string;
-    onPress: () => void;
-};
-export type FormItem = {
-    id: string;
+import type { ImageProps, ImageStyle, TextInputProps, TextStyle, TouchableOpacityProps, ViewStyle } from 'react-native';
+type BaseField = {
     label?: string;
-    input?: FormInput;
-    button?: FormButton;
+    spacing?: number;
+    style?: ViewStyle;
+    labelStyle?: TextStyle;
+};
+export type FormInput = BaseField & {
+    type: 'input';
+    inputProps?: TextInputProps;
+};
+export type FormButton = BaseField & {
+    type: 'button';
+    textStyle?: TextStyle;
+    buttonProps?: {
+        buttonText?: string;
+        onPress?: TouchableOpacityProps['onPress'];
+    };
+};
+export type FormField = FormInput | FormButton;
+export type FormItem = {
+    layout?: ViewStyle['flexDirection'];
+    spacing?: number;
+    children: FormField[];
 };
 export type FormProps = {
-    data: FormItem[];
-    gap_bwt_keyValue?: number;
-    gap_bwt_keys?: number;
-    lable_style?: TextStyle;
-    inputtext_style?: TextStyle;
-    button_container_style?: ViewStyle;
-    buttontext_style?: TextStyle;
-    placeholderTextColor?: string;
-    headerIcon?: ImageSourcePropType | undefined;
-    headerIcon_style?: ImageStyle;
-    imageProps?: ImageProps;
-    numColumns?: number;
-    flatlist?: FlatListProps<FormItem>;
+    schema: FormItem[];
 };
+export type ButtonProps = {
+    label?: string;
+    buttonText?: string;
+    onPress?: TouchableOpacityProps['onPress'];
+    style?: ViewStyle;
+    textStyle?: TextStyle;
+    spacing?: number;
+    labelStyle?: TextStyle;
+};
+export type InputProps = {
+    label?: string;
+    style?: TextInputProps['style'];
+    spacing?: number;
+    labelStyle?: TextStyle;
+    placeholder?: TextInputProps['placeholder'];
+    value?: TextInputProps['value'];
+    onChangeText?: TextInputProps['onChangeText'];
+};
+export type IconProps = {
+    icon?: ImageProps['source'];
+    style?: ImageStyle;
+};
+export type TextProps = {
+    label?: string;
+    style?: TextStyle;
+};
+export {};

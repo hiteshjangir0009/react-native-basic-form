@@ -1,51 +1,76 @@
-// import { TextInputProps } from './../node_modules/react-native/types_generated/Libraries/Components/TextInput/TextInput.flow.d';
+// types.ts
 import type {
-  FlatListProps,
-  ImageProps,
-  ImageSourcePropType,
-  ImageStyle,
+    ImageProps,
+    ImageStyle,
   TextInputProps,
   TextStyle,
+  TouchableOpacityProps,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-export type FormInput = {
-  placeholder?: string;
-  value: string;
-  onChangeText: TextInputProps["onChangeText"];
-  multiline?: TextInputProps["multiline"];
-  textAlignVertical?: TextInputProps["textAlignVertical"];
-  keyboardType?: TextInputProps["keyboardType"];
+type BaseField = {
+  label?: string;
+  spacing?: number;
+  style?: ViewStyle;
+  labelStyle?: TextStyle;
 };
 
-export type FormButton = {
-  label: string;
-  onPress: () => void;
+export type FormInput = BaseField & {
+  type: 'input';
+  inputProps?: TextInputProps;
 };
+
+export type FormButton = BaseField & {
+  type: 'button';
+  textStyle?: TextStyle;
+  buttonProps?: {
+    buttonText?: string;
+    onPress?: TouchableOpacityProps['onPress'];
+  };
+};
+
+export type FormField = FormInput | FormButton;
 
 export type FormItem = {
-  id: string;
-  label?: string;
-  input?: FormInput;
-  button?: FormButton;
+  layout?: ViewStyle['flexDirection'];
+  spacing?: number;
+  children: FormField[];
 };
 
 export type FormProps = {
-  data: FormItem[];
+  schema: FormItem[];
+};
 
-  gap_bwt_keyValue?: number;
-  gap_bwt_keys?: number;
+// Buttons.types.ts
+export type ButtonProps = {
+  label?: string;
+  buttonText?: string;
+  onPress?: TouchableOpacityProps['onPress'];
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+  spacing?: number;
+  labelStyle?: TextStyle;
+};
 
-  lable_style?: TextStyle;
-  inputtext_style?: TextStyle;
-  button_container_style?: ViewStyle;
-  buttontext_style?: TextStyle;
+// Input.types.ts
+export type InputProps = {
+  label?: string;
+  style?: TextInputProps['style'];
+  spacing?: number;
+  labelStyle?: TextStyle;
+  placeholder?:TextInputProps['placeholder'],
+  value?:TextInputProps['value'],
+  onChangeText?:TextInputProps['onChangeText'],
+};
 
-  placeholderTextColor?: string;
+// Icon.types.ts
+export type IconProps = {
+  icon?: ImageProps['source'];
+  style?: ImageStyle;
+};
 
-  headerIcon?: ImageSourcePropType | undefined;
-  headerIcon_style?: ImageStyle;
-  imageProps?: ImageProps;
-  numColumns?: number;
-  flatlist?:  FlatListProps<FormItem>;
+// Text.types.ts
+export type TextProps = {
+  label?: string;
+  style?: TextStyle;
 };
