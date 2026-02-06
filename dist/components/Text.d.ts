@@ -1,4 +1,4 @@
-import React from 'react';
-import { TextProps } from '../types';
-declare const FormText: React.FC<TextProps>;
+import React from "react";
+import { FormTextProps } from "../types";
+declare const FormText: React.FC<FormTextProps>;
 export default FormText;

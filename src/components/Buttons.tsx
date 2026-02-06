@@ -11,12 +11,12 @@ const Buttons: React.FC<ButtonProps> = ({
   textStyle,
   spacing,
   labelStyle,
+  ...touchableProps
 }) => {
   return (
-    <View style={{ gap: spacing ?? 13 }}>
-      <FormText label={label || " "} style={labelStyle} />
-
+    <View style={{ }}>
       <TouchableOpacity
+        {...touchableProps}
         onPress={onPress}
         style={[
           {

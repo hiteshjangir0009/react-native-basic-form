@@ -4,30 +4,16 @@ import FormText from './Text';
 import { InputProps } from '../types';
 
 const InputText:React.FC<InputProps> = ({
-  label,
-  placeholder,
-  value,
-  onChangeText,
+ label,
   style,
-  spacing,
   labelStyle,
+  ...textInputProps
 }) => {
   return (
-    <View style={{ gap: spacing || 13 }}>
-      <FormText label={label || ' '} style={labelStyle} />
+    <View>
       <TextInput
-        placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
-        style={[
-          {
-            borderWidth: 1,
-            borderColor: '#ccc',
-            padding: 10,
-            borderRadius: 6,
-          },
-          style,
-        ]}
+        {...textInputProps}     // 👈 forward EVERYTHING
+        style={style}
       />
     </View>
   );

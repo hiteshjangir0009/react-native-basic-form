@@ -1,12 +1,12 @@
-// types.ts
 import type {
-    ImageProps,
-    ImageStyle,
+  ImageProps,
+  ImageStyle,
   TextInputProps,
+  TextProps,
   TextStyle,
   TouchableOpacityProps,
   ViewStyle,
-} from 'react-native';
+} from "react-native";
 
 type BaseField = {
   label?: string;
@@ -16,24 +16,29 @@ type BaseField = {
 };
 
 export type FormInput = BaseField & {
-  type: 'input';
+  type: "input";
   inputProps?: TextInputProps;
+};
+export type FormText = BaseField & {
+  type: "text";
+  textProps?: TextProps;
 };
 
 export type FormButton = BaseField & {
-  type: 'button';
+  type: "button";
   textStyle?: TextStyle;
   buttonProps?: {
     buttonText?: string;
-    onPress?: TouchableOpacityProps['onPress'];
+    onPress?: TouchableOpacityProps["onPress"];
   };
 };
 
-export type FormField = FormInput | FormButton;
+export type FormField = FormInput | FormButton | FormText;
 
 export type FormItem = {
-  layout?: ViewStyle['flexDirection'];
+  layout?: ViewStyle["flexDirection"];
   spacing?: number;
+  style?: ViewStyle;
   children: FormField[];
 };
 
@@ -45,32 +50,31 @@ export type FormProps = {
 export type ButtonProps = {
   label?: string;
   buttonText?: string;
-  onPress?: TouchableOpacityProps['onPress'];
   style?: ViewStyle;
   textStyle?: TextStyle;
   spacing?: number;
   labelStyle?: TextStyle;
-};
+} & TouchableOpacityProps;
 
 // Input.types.ts
 export type InputProps = {
   label?: string;
-  style?: TextInputProps['style'];
+  style?: TextInputProps["style"];
   spacing?: number;
   labelStyle?: TextStyle;
-  placeholder?:TextInputProps['placeholder'],
-  value?:TextInputProps['value'],
-  onChangeText?:TextInputProps['onChangeText'],
-};
+  placeholder?: TextInputProps["placeholder"];
+  value?: TextInputProps["value"];
+  onChangeText?: TextInputProps["onChangeText"];
+} & TextInputProps;
 
 // Icon.types.ts
 export type IconProps = {
-  icon?: ImageProps['source'];
+  icon?: ImageProps["source"];
   style?: ImageStyle;
 };
 
 // Text.types.ts
-export type TextProps = {
+export type FormTextProps = {
   label?: string;
   style?: TextStyle;
-};
+} & TextProps;

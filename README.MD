@@ -1,4 +1,3 @@
-
 # 🚀 React Native Basic Form
 
 ### Control your entire form using JSON — not JSX.
@@ -14,11 +13,11 @@ The renderer stays the same — **only the JSON changes**.
 
 ## ❌ The Problem
 
-- Forms are hardcoded with JSX
+- Forms are tightly coupled to JSX
 - Layout changes require code changes
 - Reusing forms across screens is painful
 - Dynamic or server-driven forms are difficult
-- UI logic and form structure get tightly coupled
+- UI logic and structure get mixed together
 
 As a result, forms often become one of the **least maintainable parts** of an app.
 
@@ -29,6 +28,7 @@ As a result, forms often become one of the **least maintainable parts** of an ap
 **React Native Basic Form** lets you control **everything about a form through JSON**:
 
 - what fields exist
+- how they are grouped
 - how they are laid out
 - how they behave
 - how they look
@@ -46,7 +46,7 @@ A **schema-driven, fully customizable form renderer for React Native**.
 ## 🎯 Who This Is For
 
 - Apps with many forms
-- Admin panels or dashboards
+- Admin panels & dashboards
 - Server-driven or config-based UIs
 - Teams that want consistent form behavior
 - Developers who prefer data-driven UI
@@ -57,7 +57,7 @@ A **schema-driven, fully customizable form renderer for React Native**.
 
 - 🧩 **Schema-based rendering**
 - 📐 **Row / Column layouts**
-- 🎨 **Fully customizable styles**
+- 🎨 **Field-level & block-level styling**
 - 🧠 **No internal state** (you control values & handlers)
 - 🌍 **Language-agnostic** (i18n handled by user)
 - 🛡 **Type-safe** with TypeScript
@@ -96,7 +96,13 @@ const formSchema = [
   {
     layout: 'column',
     spacing: 20,
+    style: { padding: 16 }, // block-level styling
     children: [
+      {
+        type: 'text',
+        label: 'Contact Information',
+        labelStyle: { fontSize: 18, fontWeight: '600' },
+      },
       {
         type: 'input',
         label: 'Contact Person Name',
@@ -157,12 +163,13 @@ The form renderer handles **how** it is rendered.
 
 ### 2. Layout Blocks
 
-Each schema block controls layout only.
+Each schema block controls grouping and layout.
 
 ```ts
 {
   layout: 'row',
   spacing: 12,
+  style: { alignItems: 'center' },
   children: [...]
 }
 ```
@@ -176,16 +183,36 @@ Supported layouts:
 
 ### 3. Fields
 
-Each `child` inside a block is a **field**.
+Each item inside `children` is a **field**.
 
 Supported field types:
 
+* `text`
 * `input`
 * `button`
 
 ---
 
 ## 🧩 Field Types
+
+### 🔹 Text Field (Label / Header / Helper)
+
+```ts
+{
+  type: 'text',
+  label: 'Preferred Train Type',
+  labelStyle: { fontSize: 16, fontWeight: '500' },
+}
+```
+
+Used for:
+
+* section headers
+* group labels
+* instructions
+* helper text
+
+---
 
 ### 🔹 Input Field
 
@@ -194,6 +221,7 @@ Supported field types:
   type: 'input',
   label: 'Age',
   spacing: 8,
+  style: { borderColor: '#16a34a' },
   inputProps: {
     placeholder: 'Enter age',
     keyboardType: 'numeric',
@@ -222,7 +250,7 @@ All standard **React Native `TextInputProps`** are supported via `inputProps`.
 }
 ```
 
-All standard **`TouchableOpacity` behavior** is supported via `buttonProps`.
+All standard **`TouchableOpacity` props** are supported via `buttonProps`.
 
 ---
 
@@ -232,19 +260,20 @@ Styling is **fully user-controlled**.
 
 ### Field-level props
 
-| Prop         | Description                              |
-| ------------ | ---------------------------------------- |
-| `style`      | Container style                          |
-| `textStyle`  | Button text style                        |
-| `labelStyle` | Label text style                         |
-| `spacing`    | Vertical spacing between label and field |
+| Prop         | Description                   |
+| ------------ | ----------------------------- |
+| `style`      | Field container style         |
+| `textStyle`  | Button text style             |
+| `labelStyle` | Label text style              |
+| `spacing`    | Space between label and field |
 
 ### Block-level props
 
-| Prop      | Description          |
-| --------- | -------------------- |
-| `layout`  | `row` or `column`    |
-| `spacing` | Space between fields |
+| Prop      | Description                        |
+| --------- | ---------------------------------- |
+| `layout`  | `row` or `column`                  |
+| `spacing` | Space between fields               |
+| `style`   | Wrapper `View` style for the block |
 
 ---
 
@@ -264,21 +293,14 @@ No translation logic is included.
 
 ## 🧱 TypeScript Support
 
-The library exposes a **strict schema contract**.
-
-### Types Overview
+The library exposes a **strict, typed schema contract**.
 
 ```ts
-export type FormField = FormInput | FormButton;
-
 export type FormItem = {
   layout?: 'row' | 'column';
   spacing?: number;
+  style?: ViewStyle;
   children: FormField[];
-};
-
-export type FormProps = {
-  schema: FormItem[];
 };
 ```
 
@@ -304,7 +326,7 @@ TypeScript will:
 
 ## 🔧 Extending the Form
 
-To add new field types (e.g. `text`, `checkbox`, `select`):
+To add new field types (e.g. `checkbox`, `radioGroup`, `select`):
 
 1. Extend the schema type
 2. Add a case in the renderer
@@ -324,7 +346,7 @@ It focuses on **rendering**, not logic.
 
 ---
 
-## 🛣 Roadmap (Optional)
+## 🛣 Roadmap
 
 * Conditional rendering
 * Repeatable field groups
@@ -349,4 +371,3 @@ Please keep PRs:
 ## 📄 License
 
 MIT
-

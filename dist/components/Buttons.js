@@ -1,11 +1,8 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import FormText from "./Text";
-const Buttons = ({ label, buttonText, onPress, style, textStyle, spacing, labelStyle, }) => {
-    return (<View style={{ gap: spacing !== null && spacing !== void 0 ? spacing : 13 }}>
-      <FormText label={label || " "} style={labelStyle}/>
-
-      <TouchableOpacity onPress={onPress} style={[
+const Buttons = ({ label, buttonText, onPress, style, textStyle, spacing, labelStyle, ...touchableProps }) => {
+    return (<View style={{}}>
+      <TouchableOpacity {...touchableProps} onPress={onPress} style={[
             {
                 backgroundColor: "#2563eb",
                 padding: 14,

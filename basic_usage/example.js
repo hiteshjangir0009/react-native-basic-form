@@ -3,43 +3,69 @@ import { View } from "react-native";
 import { Form } from "react-native-basic-form";
 
 export default function App() {
-  // 👉 Form state is owned by YOU, not by the Form component
-  // The library is stateless by design
+  /**
+   * ✅ Form state is owned by YOU
+   * This library is intentionally stateless.
+   */
   const [name, setName] = useState("");
 
-  // 👉 Schema controls the entire form UI
-  // Changing this JSON changes the form
+  /**
+   * ✅ Schema controls the entire form UI
+   * Change this JSON → the form UI updates automatically
+   */
   const formSchema = [
     {
-      // Layout block: controls how children are arranged
+      /**
+       * Layout block
+       * Controls grouping, direction, and spacing
+       */
       layout: "column",
-      spacing: 16, // space between fields
+      spacing: 16,
 
-      // Children = actual form fields
       children: [
         {
-          // Input field
-          type: "input",
-          label: "Name",
-
-          // All TextInput behavior goes inside inputProps
-          inputProps: {
-            placeholder: "Enter your name",
-            value: name,          // controlled value
-            onChangeText: setName // update state
+          /**
+           * Text field
+           * Used for headings, labels, instructions, or helper text
+           */
+          type: "text",
+          label: "User Information",
+          labelStyle: {
+            fontSize: 18,
+            fontWeight: "600",
           },
         },
 
         {
-          // Button field
+          /**
+           * Input field
+           */
+          type: "input",
+          label: "Name",
+
+          /**
+           * All TextInput behavior lives inside inputProps
+           */
+          inputProps: {
+            placeholder: "Enter your name",
+            value: name,
+            onChangeText: setName,
+          },
+        },
+
+        {
+          /**
+           * Button field
+           */
           type: "button",
           label: "Submit",
 
-          // Button behavior goes inside buttonProps
+          /**
+           * All TouchableOpacity behavior lives inside buttonProps
+           */
           buttonProps: {
             buttonText: "Submit",
             onPress: () => {
-              // Access state directly
               console.log("Name:", name);
             },
           },
@@ -50,9 +76,11 @@ export default function App() {
 
   return (
     <View style={{ padding: 16 }}>
-      {/* 
-        👉 Form only renders what the schema describes
-        👉 No internal state, no validation, no logic
+      {/*
+        ✅ Form is just a renderer
+        - No internal state
+        - No validation
+        - No logic
       */}
       <Form schema={formSchema} />
     </View>

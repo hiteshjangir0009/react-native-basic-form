@@ -1,19 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import { TextProps } from '../types';
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { FormTextProps } from "../types";
 
-const FormText:React.FC<TextProps> = ({ label, style }) => {
+const FormText: React.FC<FormTextProps> = ({ label, style, ...textProps }) => {
   return (
     <View>
       <Text
+        {...textProps}
         style={[
           {
-            color: '#000',
+            color: "#000",
           },
           style,
         ]}
       >
-        {label || ' '}
+        {label || " "}
       </Text>
     </View>
   );

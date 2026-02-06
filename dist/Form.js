@@ -2,23 +2,39 @@ import { View } from "react-native";
 import React from "react";
 import InputText from "./components/InputText";
 import Buttons from "./components/Buttons";
+import FormText from "./components/Text";
 export const Form = ({ schema = [] }) => {
-    const RenderField = (field, index) => {
+    const renderField = (field, index) => {
+        var _a, _b;
         switch (field.type) {
+            case "text":
+                return (<FormText key={index} label={field.label} style={field.labelStyle}/>);
             case "button":
-                return (<Buttons key={index} label={field.label} style={field.style} textStyle={field.textStyle} spacing={field.spacing} {...(field.buttonProps || {})}/>);
+                return (<View key={index} style={{ gap: (_a = field.spacing) !== null && _a !== void 0 ? _a : 13 }}>
+            {field.label && (<FormText label={field.label} style={field.labelStyle}/>)}
+            <Buttons style={field.style} textStyle={field.textStyle} {...(field.buttonProps || {})}/>
+          </View>);
             case "input":
-                return (<InputText key={index} label={field.label} style={field.style} spacing={field.spacing} {...(field.inputProps || {})}/>);
+                return (<View key={index} style={{ gap: (_b = field.spacing) !== null && _b !== void 0 ? _b : 13 }}>
+            {field.label && (<FormText label={field.label} style={field.labelStyle}/>)}
+            <InputText style={field.style} {...(field.inputProps || {})}/>
+          </View>);
             default:
                 return null;
         }
     };
     return (<>
-      {schema.map((block, blockIndex) => (<View key={blockIndex} style={{
-                flexDirection: block.layout || "column",
-                gap: block.spacing || 20,
-            }}>
-          {block.children.map(RenderField)}
-        </View>))}
+      {schema.map((block, blockIndex) => {
+            var _a, _b;
+            return (<View key={blockIndex} style={[
+                    {
+                        flexDirection: (_a = block.layout) !== null && _a !== void 0 ? _a : "column",
+                        gap: (_b = block.spacing) !== null && _b !== void 0 ? _b : 20,
+                    },
+                    block.style,
+                ]}>
+          {block.children.map(renderField)}
+        </View>);
+        })}
     </>);
 };
